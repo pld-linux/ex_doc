@@ -28,7 +28,9 @@ Source10:	https://repo.hex.pm/tarballs/nimble_parsec-1.4.0.tar
 # Source10-md5:	bd05f136e479edd64804a6f512939f13
 URL:		https://elixir-lang.org/
 BuildRequires:	elixir
-%requires_ge	erlang
+BuildRequires:	erlang >= 2:17
+BuildRequires:	rpmbuild(macros) >= 2.035
+%{?erlang_requires}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -49,8 +51,8 @@ done
 
 %build
 LC_ALL=C.UTF-8; export LC_ALL
-mix deps.get
-MIX_ENV=prod mix escript.build
+%__mix deps.get
+MIX_ENV=prod %__mix escript.build
 
 %install
 rm -rf $RPM_BUILD_ROOT
